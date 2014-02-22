@@ -16,6 +16,8 @@
       ],
       'sources': [
         'native_mate/empty.cc',
+        'gin/arguments.cc',
+        'gin/arguments.h',
         'gin/converter.cc',
         'gin/converter.h',
         'vendor/nan/nan.h',
