@@ -1,0 +1,3 @@
+[submodule "vendor/base-minimal"]
+	path = vendor/base-minimal
+	url = https://github.com/zcbenz/base-minimal.git
