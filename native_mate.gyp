@@ -11,8 +11,14 @@
       },
       'export_dependent_settings': [ 'vendor/base-minimal/base.gyp:base', ],
       'dependencies': [ 'vendor/base-minimal/base.gyp:base', ],
+      'include_dirs': [
+        '.',
+      ],
       'sources': [
-        'native_mate/empty.cc'
+        'native_mate/empty.cc',
+        'gin/converter.cc',
+        'gin/converter.h',
+        'vendor/nan/nan.h',
       ],
     },
   ],
