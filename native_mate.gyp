@@ -20,6 +20,8 @@
         'gin/arguments.h',
         'gin/converter.cc',
         'gin/converter.h',
+        'gin/function_template.cc',
+        'gin/function_template.h',
         'vendor/nan/nan.h',
       ],
     },
