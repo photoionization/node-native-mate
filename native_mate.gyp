@@ -6,6 +6,7 @@
       'direct_dependent_settings': {
         'include_dirs': [
           '.',
+          'vendor',
         ],
       },
       'export_dependent_settings': [ 'vendor/base-minimal/base.gyp:base', ],
