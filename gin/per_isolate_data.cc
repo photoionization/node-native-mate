@@ -4,6 +4,7 @@
 
 #include "gin/per_isolate_data.h"
 #include "gin/public/gin_embedders.h"
+#include "uv/include/uv.h"
 
 using v8::ArrayBuffer;
 using v8::Eternal;
@@ -15,18 +16,30 @@ using v8::ObjectTemplate;
 
 namespace gin {
 
+namespace {
+
+uv_once_t g_once_guard;
+uv_key_t g_isolate_data_key;
+
+void InitializeThreadLocalStorage() {
+  uv_key_create(&g_isolate_data_key);
+}
+
+}  // namespace
+
 PerIsolateData::PerIsolateData(Isolate* isolate,
                                ArrayBuffer::Allocator* allocator)
     : isolate_(isolate), allocator_(allocator) {
-  isolate_->SetData(this);
+  uv_once(&g_once_guard, InitializeThreadLocalStorage);
+  uv_key_set(&g_isolate_data_key, this);
 }
 
 PerIsolateData::~PerIsolateData() {
-  isolate_->SetData(NULL);
+  uv_key_set(&g_isolate_data_key, NULL);
 }
 
 PerIsolateData* PerIsolateData::From(Isolate* isolate) {
-  return static_cast<PerIsolateData*>(isolate->GetData());
+  return static_cast<PerIsolateData*>(uv_key_get(&g_isolate_data_key));
 }
 
 void PerIsolateData::SetObjectTemplate(WrapperInfo* info,
