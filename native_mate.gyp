@@ -6,6 +6,7 @@
       'direct_dependent_settings': {
         'include_dirs': [
           '.',
+          'header_redirect',
           'vendor',
         ],
       },
@@ -13,9 +14,9 @@
       'dependencies': [ 'vendor/base-minimal/base.gyp:base', ],
       'include_dirs': [
         '.',
+        'header_redirect',
       ],
       'sources': [
-        'native_mate/empty.cc',
         'gin/arguments.cc',
         'gin/arguments.h',
         'gin/context_holder.cc',
@@ -42,7 +43,12 @@
         'gin/runner.h',
         'gin/try_catch.cc',
         'gin/try_catch.h',
+        'gin/wrappable.cc',
+        'gin/wrappable.h',
         'gin/wrapper_info.cc',
+        'header_redirect/uv/include/uv.h',
+        'header_redirect/v8/include/v8.h',
+        'native_mate/empty.cc',
         'vendor/nan/nan.h',
       ],
     },
