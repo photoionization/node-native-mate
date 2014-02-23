@@ -1,0 +1,23 @@
+{
+  "main": "",
+  "name": "native-mate",
+  "description": "Make writing node native modules easier",
+  "version": "0.1.0",
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/zcbenz/native-mate/raw/master/LICENSE.md"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zcbenz/native-mate.git"
+  },
+  "bugs": {
+    "url": "https://github.com/zcbenz/native-mate/issues"
+  },
+  "homepage": "https://github.com/zcbenz/native-mate",
+  "scripts": {
+    "install": "echo"
+  }
+}

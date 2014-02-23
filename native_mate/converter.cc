@@ -6,7 +6,6 @@
 
 #include "v8/include/v8.h"
 
-using v8::ArrayBuffer;
 using v8::Boolean;
 using v8::External;
 using v8::Function;
@@ -143,20 +142,6 @@ bool Converter<Handle<Object> >::FromV8(Isolate* isolate, Handle<Value> val,
   if (!val->IsObject())
     return false;
   *out = Handle<Object>::Cast(val);
-  return true;
-}
-
-Handle<Value> Converter<Handle<ArrayBuffer> >::ToV8(Isolate* isolate,
-                                                    Handle<ArrayBuffer> val) {
-  return val.As<Value>();
-}
-
-bool Converter<Handle<ArrayBuffer> >::FromV8(Isolate* isolate,
-                                             Handle<Value> val,
-                                             Handle<ArrayBuffer>* out) {
-  if (!val->IsArrayBuffer())
-    return false;
-  *out = Handle<ArrayBuffer>::Cast(val);
   return true;
 }
 

@@ -1,0 +1,8 @@
+#!/bin/bash
+
+NPM_PATH=`which npm`
+NODEGYP_PATH=${NPM_PATH%bin/npm}/lib/node_modules/npm/node_modules/node-gyp/bin/node-gyp.js
+
+ln -s native_mate.gyp binding.gyp
+node $NODEGYP_PATH rebuild .
+rm binding.gyp
