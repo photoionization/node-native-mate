@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/zcbenz/native-mate/issues"
   },
-  "homepage": "https://github.com/zcbenz/native-mate"
+  "homepage": "https://github.com/zcbenz/native-mate",
+  "scripts": {
+    "install": "echo"
+  }
 }
