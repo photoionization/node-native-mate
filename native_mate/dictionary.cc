@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "gin/dictionary.h"
+#include "native_mate/dictionary.h"
 
-namespace gin {
+namespace nm {
 
 Dictionary::Dictionary(v8::Isolate* isolate)
     : isolate_(isolate) {
@@ -39,4 +39,4 @@ bool Converter<Dictionary>::FromV8(v8::Isolate* isolate,
   return true;
 }
 
-}  // namespace gin
+}  // namespace nm

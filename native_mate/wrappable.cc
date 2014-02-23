@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "gin/wrappable.h"
+#include "native_mate/wrappable.h"
 
 #include "base/logging.h"
-#include "gin/object_template_builder.h"
+#include "native_mate/object_template_builder.h"
 
-namespace gin {
+namespace nm {
 
 Wrappable::Wrappable() {
 }
@@ -55,4 +55,4 @@ void* FromV8Impl(v8::Isolate* isolate, v8::Handle<v8::Value> val) {
 
 }  // namespace internal
 
-}  // namespace gin
+}  // namespace nm

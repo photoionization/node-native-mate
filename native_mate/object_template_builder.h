@@ -2,19 +2,19 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef GIN_OBJECT_TEMPLATE_BUILDER_H_
-#define GIN_OBJECT_TEMPLATE_BUILDER_H_
+#ifndef NATIVE_MATE_OBJECT_TEMPLATE_BUILDER_H_
+#define NATIVE_MATE_OBJECT_TEMPLATE_BUILDER_H_
 
 #include "base/bind.h"
 #include "base/callback.h"
 #include "base/strings/string_piece.h"
 #include "base/template_util.h"
-#include "gin/converter.h"
-#include "gin/function_template.h"
-#include "gin/gin_export.h"
+#include "native_mate/converter.h"
+#include "native_mate/function_template.h"
+#include "native_mate/gin_export.h"
 #include "v8/include/v8.h"
 
-namespace gin {
+namespace nm {
 
 namespace {
 
@@ -82,7 +82,7 @@ class GIN_EXPORT ObjectTemplateBuilder {
 
   // In the following methods, T and U can be function pointer, member function
   // pointer, base::Callback, or v8::FunctionTemplate. Most clients will want to
-  // use one of the first two options. Also see gin::CreateFunctionTemplate()
+  // use one of the first two options. Also see nm::CreateFunctionTemplate()
   // for creating raw function templates.
   template<typename T>
   ObjectTemplateBuilder& SetMethod(const base::StringPiece& name,
@@ -119,6 +119,6 @@ class GIN_EXPORT ObjectTemplateBuilder {
   v8::Local<v8::ObjectTemplate> template_;
 };
 
-}  // namespace gin
+}  // namespace nm
 
-#endif  // GIN_OBJECT_TEMPLATE_BUILDER_H_
+#endif  // NATIVE_MATE_OBJECT_TEMPLATE_BUILDER_H_

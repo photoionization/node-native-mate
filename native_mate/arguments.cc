@@ -2,12 +2,12 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "gin/arguments.h"
+#include "native_mate/arguments.h"
 
 #include "base/strings/stringprintf.h"
-#include "gin/converter.h"
+#include "native_mate/converter.h"
 
-namespace gin {
+namespace nm {
 
 Arguments::Arguments()
     : isolate_(NULL),
@@ -45,4 +45,4 @@ void Arguments::ThrowTypeError(const std::string& message) const {
       StringToV8(isolate_, message)));
 }
 
-}  // namespace gin
+}  // namespace nm

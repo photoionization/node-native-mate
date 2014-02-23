@@ -2,16 +2,16 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef GIN_TRY_CATCH_H_
-#define GIN_TRY_CATCH_H_
+#ifndef NATIVE_MATE_TRY_CATCH_H_
+#define NATIVE_MATE_TRY_CATCH_H_
 
 #include <string>
 
 #include "base/basictypes.h"
-#include "gin/gin_export.h"
+#include "native_mate/gin_export.h"
 #include "v8/include/v8.h"
 
-namespace gin {
+namespace nm {
 
 // TryCatch is a convenient wrapper around v8::TryCatch.
 class GIN_EXPORT TryCatch {
@@ -28,6 +28,6 @@ class GIN_EXPORT TryCatch {
   DISALLOW_COPY_AND_ASSIGN(TryCatch);
 };
 
-}  // namespace gin
+}  // namespace nm
 
-#endif  // GIN_TRY_CATCH_H_
+#endif  // NATIVE_MATE_TRY_CATCH_H_

@@ -2,14 +2,14 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef GIN_ARGUMENTS_H_
-#define GIN_ARGUMENTS_H_
+#ifndef NATIVE_MATE_ARGUMENTS_H_
+#define NATIVE_MATE_ARGUMENTS_H_
 
 #include "base/basictypes.h"
-#include "gin/converter.h"
-#include "gin/gin_export.h"
+#include "native_mate/converter.h"
+#include "native_mate/gin_export.h"
 
-namespace gin {
+namespace nm {
 
 // Arguments is a wrapper around v8::FunctionCallbackInfo that integrates
 // with Converter to make it easier to marshall arguments and return values
@@ -75,6 +75,6 @@ class GIN_EXPORT Arguments {
   bool insufficient_arguments_;
 };
 
-}  // namespace gin
+}  // namespace nm
 
-#endif  // GIN_ARGUMENTS_H_
+#endif  // NATIVE_MATE_ARGUMENTS_H_

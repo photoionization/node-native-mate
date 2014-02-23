@@ -2,9 +2,9 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "gin/function_template.h"
+#include "native_mate/function_template.h"
 
-namespace gin {
+namespace nm {
 
 namespace internal {
 
@@ -30,4 +30,4 @@ void CallbackHolderBase::WeakCallback(
 
 }  // namespace internal
 
-}  // namespace gin
+}  // namespace nm

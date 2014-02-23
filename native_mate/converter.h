@@ -2,17 +2,17 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef GIN_CONVERTER_H_
-#define GIN_CONVERTER_H_
+#ifndef NATIVE_MATE_CONVERTER_H_
+#define NATIVE_MATE_CONVERTER_H_
 
 #include <string>
 #include <vector>
 
 #include "base/strings/string_piece.h"
-#include "gin/gin_export.h"
+#include "native_mate/gin_export.h"
 #include "v8/include/v8.h"
 
-namespace gin {
+namespace nm {
 
 template<typename T, typename Enable = void>
 struct Converter {};
@@ -198,6 +198,6 @@ bool ConvertFromV8(v8::Isolate* isolate, v8::Handle<v8::Value> input,
 
 GIN_EXPORT std::string V8ToString(v8::Handle<v8::Value> value);
 
-}  // namespace gin
+}  // namespace nm
 
-#endif  // GIN_CONVERTER_H_
+#endif  // NATIVE_MATE_CONVERTER_H_

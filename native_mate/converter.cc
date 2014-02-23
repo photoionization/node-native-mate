@@ -2,7 +2,7 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "gin/converter.h"
+#include "native_mate/converter.h"
 
 #include "v8/include/v8.h"
 
@@ -18,7 +18,7 @@ using v8::Object;
 using v8::String;
 using v8::Value;
 
-namespace gin {
+namespace nm {
 
 Handle<Value> Converter<bool>::ToV8(Isolate* isolate, bool val) {
   return Boolean::New(val).As<Value>();
@@ -202,4 +202,4 @@ std::string V8ToString(v8::Handle<v8::Value> value) {
   return result;
 }
 
-}  // namespace gin
+}  // namespace nm

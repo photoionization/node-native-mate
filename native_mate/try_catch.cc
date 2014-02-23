@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#include "gin/try_catch.h"
+#include "native_mate/try_catch.h"
 
 #include <sstream>
 
-#include "gin/converter.h"
+#include "native_mate/converter.h"
 
-namespace gin {
+namespace nm {
 
 TryCatch::TryCatch() {
 }
@@ -46,4 +46,4 @@ std::string TryCatch::GetStackTrace() {
   return ss.str();
 }
 
-}  // namespace gin
+}  // namespace nm

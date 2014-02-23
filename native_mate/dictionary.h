@@ -2,13 +2,13 @@
 // Use of this source code is governed by a BSD-style license that can be
 // found in the LICENSE file.
 
-#ifndef GIN_DICTIONARY_H_
-#define GIN_DICTIONARY_H_
+#ifndef NATIVE_MATE_DICTIONARY_H_
+#define NATIVE_MATE_DICTIONARY_H_
 
-#include "gin/converter.h"
-#include "gin/gin_export.h"
+#include "native_mate/converter.h"
+#include "native_mate/gin_export.h"
 
-namespace gin {
+namespace nm {
 
 // Dictionary is useful when writing bindings for a function that either
 // receives an arbitrary JavaScript object as an argument or returns an
@@ -60,6 +60,6 @@ struct GIN_EXPORT Converter<Dictionary> {
                      Dictionary* out);
 };
 
-}  // namespace gin
+}  // namespace nm
 
-#endif  // GIN_DICTIONARY_H_
+#endif  // NATIVE_MATE_DICTIONARY_H_

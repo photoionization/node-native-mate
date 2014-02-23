@@ -4,8 +4,8 @@
 
 
 
-#ifndef GIN_FUNCTION_TEMPLATE_H_
-#define GIN_FUNCTION_TEMPLATE_H_
+#ifndef NATIVE_MATE_FUNCTION_TEMPLATE_H_
+#define NATIVE_MATE_FUNCTION_TEMPLATE_H_
 
 // Copyright 2013 The Chromium Authors. All rights reserved.
 // Use of this source code is governed by a BSD-style license that can be
@@ -13,12 +13,12 @@
 
 #include "base/callback.h"
 #include "base/logging.h"
-#include "gin/arguments.h"
-#include "gin/converter.h"
-#include "gin/gin_export.h"
+#include "native_mate/arguments.h"
+#include "native_mate/converter.h"
+#include "native_mate/gin_export.h"
 #include "v8/include/v8.h"
 
-namespace gin {
+namespace nm {
 
 class PerIsolateData;
 
@@ -83,7 +83,7 @@ class CallbackHolder : public CallbackHolderBase {
 
 // This set of templates invokes a base::Callback, converts the return type to a
 // JavaScript value, and returns that value to script via the provided
-// gin::Arguments object.
+// nm::Arguments object.
 //
 // In C++, you can declare the function foo(void), but you can't pass a void
 // expression to foo. As a result, we must specialize the case of Callbacks that
@@ -485,7 +485,7 @@ struct Dispatcher<R(P1, P2, P3, P4, P5, P6)> {
 
 // CreateFunctionTemplate creates a v8::FunctionTemplate that will create
 // JavaScript functions that execute a provided C++ function or base::Callback.
-// JavaScript arguments are automatically converted via gin::Converter, as is
+// JavaScript arguments are automatically converted via nm::Converter, as is
 // the return value of the C++ function, if any.
 template<typename Sig>
 v8::Local<v8::FunctionTemplate> CreateFunctionTemplate(
@@ -501,6 +501,6 @@ v8::Local<v8::FunctionTemplate> CreateFunctionTemplate(
                                              holder->GetHandle(isolate)));
 }
 
-}  // namespace gin
+}  // namespace nm
 
-#endif  // GIN_FUNCTION_TEMPLATE_H_
+#endif  // NATIVE_MATE_FUNCTION_TEMPLATE_H_
