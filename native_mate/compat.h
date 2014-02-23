@@ -12,7 +12,6 @@
 #define MATE_METHOD_ARGS_TYPE   v8::FunctionCallbackInfo<v8::Value>
 #define MATE_METHOD_RETURN_TYPE void
 
-#define MATE_METHOD_SCOPE(isolate)      // nop
 #define MATE_METHOD_RETURN_VALUE(value) return info.GetReturnValue().Set(value)
 #define MATE_METHOD_RETURN_UNDEFINED()  return
 #define MATE_METHOD_RETURN_NULL()       return info.GetReturnValue().SetNull()
@@ -40,12 +39,11 @@
 #define MATE_METHOD_ARGS_TYPE   v8::Arguments
 #define MATE_METHOD_RETURN_TYPE v8::Handle<v8::Value>
 
-#define MATE_METHOD_SCOPE(isolate)      v8::HandleScope scope
-#define MATE_METHOD_RETURN_VALUE(value) return scope.Close(value)
+#define MATE_METHOD_RETURN_VALUE(value) return value
 #define MATE_METHOD_RETURN_UNDEFINED()  return v8::Undefined()
 #define MATE_METHOD_RETURN_NULL()       return v8::Null()
 #define MATE_METHOD_RETURN(value) \
-    MATE_METHOD_RETURN_VALUE(ConvertToV8(info.GetIsolate(), val))
+    MATE_METHOD_RETURN_VALUE(ConvertToV8(args.isolate(), value))
 
 #define MATE_STRING_NEW_FROM_UTF8(isolate, data, length) \
     v8::String::New(data, length)
