@@ -6,7 +6,6 @@
 
 #include "base/logging.h"
 #include "gin/object_template_builder.h"
-#include "gin/per_isolate_data.h"
 
 namespace gin {
 
@@ -35,13 +34,9 @@ v8::Handle<v8::Object> WrappableBase::GetWrapperImpl(v8::Isolate* isolate,
     return v8::Local<v8::Object>::New(isolate, wrapper_);
   }
 
-  PerIsolateData* data = PerIsolateData::From(isolate);
-  v8::Local<v8::ObjectTemplate> templ = data->GetObjectTemplate(info);
-  if (templ.IsEmpty()) {
-    templ = GetObjectTemplateBuilder(isolate).Build();
-    CHECK(!templ.IsEmpty());
-    data->SetObjectTemplate(info, templ);
-  }
+  v8::Local<v8::ObjectTemplate> templ =
+      GetObjectTemplateBuilder(isolate).Build();
+  CHECK(!templ.IsEmpty());
   CHECK_EQ(kNumberOfInternalFields, templ->InternalFieldCount());
   v8::Handle<v8::Object> wrapper = templ->NewInstance();
   wrapper->SetAlignedPointerInInternalField(kWrapperInfoIndex, info);
