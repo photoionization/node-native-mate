@@ -16,7 +16,7 @@ Arguments::Arguments()
       insufficient_arguments_(false) {
 }
 
-Arguments::Arguments(const v8::FunctionCallbackInfo<v8::Value>& info)
+Arguments::Arguments(const MATE_METHOD_ARGS_TYPE& info)
     : isolate_(info.GetIsolate()),
       info_(&info),
       next_(0),
@@ -41,8 +41,7 @@ void Arguments::ThrowError() const {
 }
 
 void Arguments::ThrowTypeError(const std::string& message) const {
-  isolate_->ThrowException(v8::Exception::TypeError(
-      StringToV8(isolate_, message)));
+  MATE_THROW_TYPE_ERROR(message.c_str());
 }
 
 }  // namespace mate
