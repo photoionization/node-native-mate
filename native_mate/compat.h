@@ -15,6 +15,11 @@
 #define MATE_METHOD_RETURN_UNDEFINED()  return
 #define MATE_METHOD_RETURN_NULL()       return args.GetReturnValue().SetNull()
 
+#define MATE_STRING_NEW_FROM_UTF8(isolate, data, length) \
+    v8::String::NewFromUtf8(isolate, data, v8::String::kNormalString, length)
+#define MATE_STRING_NEW_SYMBOL(isolate, data, length) \
+    v8::String::NewFromUtf8(isolate, data, v8::String::kInternalizedString, length)
+
 #define MATE_SET_INTERNAL_FIELD_POINTER(object, index, value) \
     object->SetAlignedPointerInInternalField(index, value)
 #define MATE_GET_INTERNAL_FIELD_POINTER(object, index) \
@@ -36,6 +41,11 @@
 #define MATE_METHOD_RETURN_VALUE(value) return scope.Close(value)
 #define MATE_METHOD_RETURN_UNDEFINED()  return v8::Undefined()
 #define MATE_METHOD_RETURN_NULL()       return v8::Null()
+
+#define MATE_STRING_NEW_FROM_UTF8(isolate, data, length) \
+    v8::String::New(data, length)
+#define MATE_STRING_NEW_SYMBOL(isolate, data, length) \
+    v8::String::NewSymbol(data, length)
 
 #define MATE_SET_INTERNAL_FIELD_POINTER(object, index, value) \
     object->SetPointerInInternalField(index, value)

@@ -4,6 +4,7 @@
 
 #include "native_mate/converter.h"
 
+#include "native_mate/compat.h"
 #include "v8/include/v8.h"
 
 using v8::Boolean;
@@ -104,8 +105,8 @@ bool Converter<double>::FromV8(Isolate* isolate, Handle<Value> val,
 
 Handle<Value> Converter<base::StringPiece>::ToV8(
     Isolate* isolate, const base::StringPiece& val) {
-  return String::NewFromUtf8(isolate, val.data(), String::kNormalString,
-                             static_cast<uint32_t>(val.length()));
+  return MATE_STRING_NEW_FROM_UTF8(isolate, val.data(),
+                                   static_cast<uint32_t>(val.length()));
 }
 
 Handle<Value> Converter<std::string>::ToV8(Isolate* isolate,
@@ -172,10 +173,9 @@ bool Converter<Handle<Value> >::FromV8(Isolate* isolate, Handle<Value> val,
 
 v8::Handle<v8::String> StringToSymbol(v8::Isolate* isolate,
                                       const base::StringPiece& val) {
-  return String::NewFromUtf8(isolate,
-                             val.data(),
-                             String::kInternalizedString,
-                             static_cast<uint32_t>(val.length()));
+  return MATE_STRING_NEW_SYMBOL(isolate,
+                                val.data(),
+                                static_cast<uint32_t>(val.length()));
 }
 
 std::string V8ToString(v8::Handle<v8::Value> value) {
