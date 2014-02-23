@@ -7,13 +7,12 @@
 
 #include "base/template_util.h"
 #include "native_mate/converter.h"
-#include "native_mate/gin_export.h"
 
 namespace nm {
 
 namespace internal {
 
-GIN_EXPORT void* FromV8Impl(v8::Isolate* isolate, v8::Handle<v8::Value> val);
+void* FromV8Impl(v8::Isolate* isolate, v8::Handle<v8::Value> val);
 
 }  // namespace internal
 
@@ -45,7 +44,7 @@ GIN_EXPORT void* FromV8Impl(v8::Isolate* isolate, v8::Handle<v8::Value> val);
 class ObjectTemplateBuilder;
 
 // Non-template base class to share code between templates instances.
-class GIN_EXPORT Wrappable {
+class Wrappable {
  public:
   // Retrieve (or create) the v8 wrapper object cooresponding to this object.
   v8::Handle<v8::Object> GetWrapper(v8::Isolate* isolate);

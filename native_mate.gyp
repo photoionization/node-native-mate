@@ -27,7 +27,6 @@
         'native_mate/dictionary.h',
         'native_mate/function_template.cc',
         'native_mate/function_template.h',
-        'native_mate/gin_export.h',
         'native_mate/handle.h',
         'native_mate/object_template_builder.cc',
         'native_mate/object_template_builder.h',

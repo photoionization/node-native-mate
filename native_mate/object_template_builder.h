@@ -11,7 +11,6 @@
 #include "base/template_util.h"
 #include "native_mate/converter.h"
 #include "native_mate/function_template.h"
-#include "native_mate/gin_export.h"
 #include "v8/include/v8.h"
 
 namespace nm {
@@ -55,7 +54,7 @@ struct CallbackTraits<T, typename base::enable_if<
 // This specialization allows people to construct function templates directly if
 // they need to do fancier stuff.
 template<>
-struct GIN_EXPORT CallbackTraits<v8::Handle<v8::FunctionTemplate> > {
+struct CallbackTraits<v8::Handle<v8::FunctionTemplate> > {
   static v8::Handle<v8::FunctionTemplate> CreateTemplate(
       v8::Handle<v8::FunctionTemplate> templ) {
     return templ;
@@ -67,7 +66,7 @@ struct GIN_EXPORT CallbackTraits<v8::Handle<v8::FunctionTemplate> > {
 
 // ObjectTemplateBuilder provides a handy interface to creating
 // v8::ObjectTemplate instances with various sorts of properties.
-class GIN_EXPORT ObjectTemplateBuilder {
+class ObjectTemplateBuilder {
  public:
   explicit ObjectTemplateBuilder(v8::Isolate* isolate);
   ~ObjectTemplateBuilder();

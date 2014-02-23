@@ -9,7 +9,6 @@
 #include <vector>
 
 #include "base/strings/string_piece.h"
-#include "native_mate/gin_export.h"
 #include "v8/include/v8.h"
 
 namespace nm {
@@ -18,7 +17,7 @@ template<typename T, typename Enable = void>
 struct Converter {};
 
 template<>
-struct GIN_EXPORT Converter<bool> {
+struct Converter<bool> {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     bool val);
   static bool FromV8(v8::Isolate* isolate,
@@ -27,7 +26,7 @@ struct GIN_EXPORT Converter<bool> {
 };
 
 template<>
-struct GIN_EXPORT Converter<int32_t> {
+struct Converter<int32_t> {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     int32_t val);
   static bool FromV8(v8::Isolate* isolate,
@@ -36,7 +35,7 @@ struct GIN_EXPORT Converter<int32_t> {
 };
 
 template<>
-struct GIN_EXPORT Converter<uint32_t> {
+struct Converter<uint32_t> {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     uint32_t val);
   static bool FromV8(v8::Isolate* isolate,
@@ -45,7 +44,7 @@ struct GIN_EXPORT Converter<uint32_t> {
 };
 
 template<>
-struct GIN_EXPORT Converter<int64_t> {
+struct Converter<int64_t> {
   // Warning: JavaScript cannot represent 64 integers precisely.
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     int64_t val);
@@ -55,7 +54,7 @@ struct GIN_EXPORT Converter<int64_t> {
 };
 
 template<>
-struct GIN_EXPORT Converter<uint64_t> {
+struct Converter<uint64_t> {
   // Warning: JavaScript cannot represent 64 integers precisely.
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     uint64_t val);
@@ -65,7 +64,7 @@ struct GIN_EXPORT Converter<uint64_t> {
 };
 
 template<>
-struct GIN_EXPORT Converter<float> {
+struct Converter<float> {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     float val);
   static bool FromV8(v8::Isolate* isolate,
@@ -74,7 +73,7 @@ struct GIN_EXPORT Converter<float> {
 };
 
 template<>
-struct GIN_EXPORT Converter<double> {
+struct Converter<double> {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     double val);
   static bool FromV8(v8::Isolate* isolate,
@@ -83,14 +82,14 @@ struct GIN_EXPORT Converter<double> {
 };
 
 template<>
-struct GIN_EXPORT Converter<base::StringPiece> {
+struct Converter<base::StringPiece> {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     const base::StringPiece& val);
   // No conversion out is possible because StringPiece does not contain storage.
 };
 
 template<>
-struct GIN_EXPORT Converter<std::string> {
+struct Converter<std::string> {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     const std::string& val);
   static bool FromV8(v8::Isolate* isolate,
@@ -99,14 +98,14 @@ struct GIN_EXPORT Converter<std::string> {
 };
 
 template<>
-struct GIN_EXPORT Converter<v8::Handle<v8::Function> > {
+struct Converter<v8::Handle<v8::Function> > {
   static bool FromV8(v8::Isolate* isolate,
                      v8::Handle<v8::Value> val,
                      v8::Handle<v8::Function>* out);
 };
 
 template<>
-struct GIN_EXPORT Converter<v8::Handle<v8::Object> > {
+struct Converter<v8::Handle<v8::Object> > {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     v8::Handle<v8::Object> val);
   static bool FromV8(v8::Isolate* isolate,
@@ -115,7 +114,7 @@ struct GIN_EXPORT Converter<v8::Handle<v8::Object> > {
 };
 
 template<>
-struct GIN_EXPORT Converter<v8::Handle<v8::ArrayBuffer> > {
+struct Converter<v8::Handle<v8::ArrayBuffer> > {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     v8::Handle<v8::ArrayBuffer> val);
   static bool FromV8(v8::Isolate* isolate,
@@ -124,7 +123,7 @@ struct GIN_EXPORT Converter<v8::Handle<v8::ArrayBuffer> > {
 };
 
 template<>
-struct GIN_EXPORT Converter<v8::Handle<v8::External> > {
+struct Converter<v8::Handle<v8::External> > {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     v8::Handle<v8::External> val);
   static bool FromV8(v8::Isolate* isolate,
@@ -133,7 +132,7 @@ struct GIN_EXPORT Converter<v8::Handle<v8::External> > {
 };
 
 template<>
-struct GIN_EXPORT Converter<v8::Handle<v8::Value> > {
+struct Converter<v8::Handle<v8::Value> > {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     v8::Handle<v8::Value> val);
   static bool FromV8(v8::Isolate* isolate,
@@ -181,13 +180,13 @@ v8::Handle<v8::Value> ConvertToV8(v8::Isolate* isolate,
   return Converter<T>::ToV8(isolate, input);
 }
 
-GIN_EXPORT inline v8::Handle<v8::String> StringToV8(
+inline v8::Handle<v8::String> StringToV8(
     v8::Isolate* isolate,
     const base::StringPiece& input) {
   return ConvertToV8(isolate, input).As<v8::String>();
 }
 
-GIN_EXPORT v8::Handle<v8::String> StringToSymbol(v8::Isolate* isolate,
+v8::Handle<v8::String> StringToSymbol(v8::Isolate* isolate,
                                                  const base::StringPiece& val);
 
 template<typename T>
@@ -196,7 +195,7 @@ bool ConvertFromV8(v8::Isolate* isolate, v8::Handle<v8::Value> input,
   return Converter<T>::FromV8(isolate, input, result);
 }
 
-GIN_EXPORT std::string V8ToString(v8::Handle<v8::Value> value);
+std::string V8ToString(v8::Handle<v8::Value> value);
 
 }  // namespace nm
 

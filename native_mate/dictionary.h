@@ -6,7 +6,6 @@
 #define NATIVE_MATE_DICTIONARY_H_
 
 #include "native_mate/converter.h"
-#include "native_mate/gin_export.h"
 
 namespace nm {
 
@@ -22,7 +21,7 @@ namespace nm {
 //          v8::HandleScope. Generally speaking, you should store a Dictionary
 //          on the stack.
 //
-class GIN_EXPORT Dictionary {
+class Dictionary {
  public:
   explicit Dictionary(v8::Isolate* isolate);
   Dictionary(v8::Isolate* isolate, v8::Handle<v8::Object> object);
@@ -52,7 +51,7 @@ class GIN_EXPORT Dictionary {
 };
 
 template<>
-struct GIN_EXPORT Converter<Dictionary> {
+struct Converter<Dictionary> {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
                                     Dictionary val);
   static bool FromV8(v8::Isolate* isolate,

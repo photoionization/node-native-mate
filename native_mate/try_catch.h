@@ -8,13 +8,12 @@
 #include <string>
 
 #include "base/basictypes.h"
-#include "native_mate/gin_export.h"
 #include "v8/include/v8.h"
 
 namespace nm {
 
 // TryCatch is a convenient wrapper around v8::TryCatch.
-class GIN_EXPORT TryCatch {
+class TryCatch {
  public:
   TryCatch();
   ~TryCatch();
