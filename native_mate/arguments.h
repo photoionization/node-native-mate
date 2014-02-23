@@ -56,6 +56,13 @@ class Arguments {
     return true;
   }
 
+#if NODE_VERSION_AT_LEAST(0, 11, 0)
+  template<typename T>
+  void Return(T val) {
+    info_->GetReturnValue().Set(ConvertToV8(isolate_, val));
+  }
+#endif
+
   v8::Handle<v8::Value> PeekNext() const;
 
   void ThrowError() const;

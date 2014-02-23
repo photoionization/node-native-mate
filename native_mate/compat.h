@@ -13,9 +13,10 @@
 #define MATE_METHOD_RETURN_TYPE void
 
 #define MATE_METHOD_SCOPE(isolate)      // nop
-#define MATE_METHOD_RETURN_VALUE(value) return args.GetReturnValue().Set(value)
+#define MATE_METHOD_RETURN_VALUE(value) return info.GetReturnValue().Set(value)
 #define MATE_METHOD_RETURN_UNDEFINED()  return
-#define MATE_METHOD_RETURN_NULL()       return args.GetReturnValue().SetNull()
+#define MATE_METHOD_RETURN_NULL()       return info.GetReturnValue().SetNull()
+#define MATE_METHOD_RETURN(value)       args.Return(value)
 
 #define MATE_STRING_NEW_FROM_UTF8(isolate, data, length) \
     v8::String::NewFromUtf8(isolate, data, v8::String::kNormalString, length)
@@ -43,6 +44,8 @@
 #define MATE_METHOD_RETURN_VALUE(value) return scope.Close(value)
 #define MATE_METHOD_RETURN_UNDEFINED()  return v8::Undefined()
 #define MATE_METHOD_RETURN_NULL()       return v8::Null()
+#define MATE_METHOD_RETURN(value) \
+    MATE_METHOD_RETURN_VALUE(ConvertToV8(info.GetIsolate(), val))
 
 #define MATE_STRING_NEW_FROM_UTF8(isolate, data, length) \
     v8::String::New(data, length)
@@ -66,9 +69,7 @@
 
 
 #define MATE_METHOD(name) \
-    MATE_METHOD_RETURN_TYPE name(const MATE_METHOD_ARGS_TYPE& args)
-#define MATE_METHOD_RETURN(value) \
-    MATE_METHOD_RETURN_VALUE(ConvertToV8(args.GetIsolate(), val))
+    MATE_METHOD_RETURN_TYPE name(const MATE_METHOD_ARGS_TYPE& info)
 
 #define MATE_THROW_EXCEPTION(type, message) \
     v8::ThrowException(type(v8::String::New(message)))
