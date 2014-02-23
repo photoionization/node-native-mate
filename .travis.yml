@@ -1,10 +1,11 @@
-language: cpp
+language: node_js
 
-compiler:
-  - gcc
-  - clang
+node_js:
+  - "0.11"
+  - "0.10"
+  - "0.8"
 
 notifications:
   email: false
 
-script: ./script/cibuild
+script: node-gyp rebuild
