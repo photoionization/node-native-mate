@@ -20,6 +20,7 @@
         'header_redirect/v8/include/v8.h',
         'native_mate/arguments.cc',
         'native_mate/arguments.h',
+        'native_mate/compat.h',
         'native_mate/converter.cc',
         'native_mate/converter.h',
         'native_mate/dictionary.cc',
