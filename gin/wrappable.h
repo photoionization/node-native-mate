@@ -8,15 +8,12 @@
 #include "base/template_util.h"
 #include "gin/converter.h"
 #include "gin/gin_export.h"
-#include "gin/public/wrapper_info.h"
 
 namespace gin {
 
 namespace internal {
 
-GIN_EXPORT void* FromV8Impl(v8::Isolate* isolate,
-                            v8::Handle<v8::Value> val,
-                            WrapperInfo* info);
+GIN_EXPORT void* FromV8Impl(v8::Isolate* isolate, v8::Handle<v8::Value> val);
 
 }  // namespace internal
 
@@ -26,23 +23,17 @@ GIN_EXPORT void* FromV8Impl(v8::Isolate* isolate,
 //
 // USAGE:
 // // my_class.h
-// class MyClass : Wrappable<MyClass> {
+// class MyClass : Wrappable {
 //  public:
-//   static WrapperInfo kWrapperInfo;
-//
 //   // Optional, only required if non-empty template should be used.
 //   virtual gin::ObjectTemplateBuilder GetObjectTemplateBuilder(
 //       v8::Isolate* isolate);
 //   ...
 // };
 //
-// // my_class.cc
-// WrapperInfo MyClass::kWrapperInfo = {kEmbedderNativeGin};
-//
 // gin::ObjectTemplateBuilder MyClass::GetObjectTemplateBuilder(
 //     v8::Isolate* isolate) {
-//   return Wrappable<MyClass>::GetObjectTemplateBuilder(isolate)
-//       .SetValue("foobar", 42);
+//   return Wrappable::GetObjectTemplateBuilder(isolate).SetValue("foobar", 42);
 // }
 //
 // Subclasses should also typically have private constructors and expose a
@@ -51,47 +42,26 @@ GIN_EXPORT void* FromV8Impl(v8::Isolate* isolate,
 // wrapper for the object. If clients fail to create a wrapper for a wrappable
 // object, the object will leak because we use the weak callback from the
 // wrapper as the signal to delete the wrapped object.
-template<typename T>
-class Wrappable;
-
 class ObjectTemplateBuilder;
 
 // Non-template base class to share code between templates instances.
-class GIN_EXPORT WrappableBase {
+class GIN_EXPORT Wrappable {
+ public:
+  // Retrieve (or create) the v8 wrapper object cooresponding to this object.
+  v8::Handle<v8::Object> GetWrapper(v8::Isolate* isolate);
+
  protected:
-  WrappableBase();
-  virtual ~WrappableBase();
+  Wrappable();
+  virtual ~Wrappable();
 
   virtual ObjectTemplateBuilder GetObjectTemplateBuilder(v8::Isolate* isolate);
 
-  v8::Handle<v8::Object> GetWrapperImpl(v8::Isolate* isolate,
-                                        WrapperInfo* wrapper_info);
-
  private:
   static void WeakCallback(
-      const v8::WeakCallbackData<v8::Object, WrappableBase>& data);
+      const v8::WeakCallbackData<v8::Object, Wrappable>& data);
 
   v8::Persistent<v8::Object> wrapper_;  // Weak
 
-  DISALLOW_COPY_AND_ASSIGN(WrappableBase);
-};
-
-
-template<typename T>
-class Wrappable : public WrappableBase {
- public:
-  // Retrieve (or create) the v8 wrapper object cooresponding to this object.
-  // To customize the wrapper created for a subclass, override GetWrapperInfo()
-  // instead of overriding this function.
-  v8::Handle<v8::Object> GetWrapper(v8::Isolate* isolate) {
-    return GetWrapperImpl(isolate, &T::kWrapperInfo);
-  }
-
- protected:
-  Wrappable() {}
-  virtual ~Wrappable() {}
-
- private:
   DISALLOW_COPY_AND_ASSIGN(Wrappable);
 };
 
@@ -99,14 +69,14 @@ class Wrappable : public WrappableBase {
 // This converter handles any subclass of Wrappable.
 template<typename T>
 struct Converter<T*, typename base::enable_if<
-                       base::is_convertible<T*, WrappableBase*>::value>::type> {
+                       base::is_convertible<T*, Wrappable*>::value>::type> {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate, T* val) {
     return val->GetWrapper(isolate);
   }
 
   static bool FromV8(v8::Isolate* isolate, v8::Handle<v8::Value> val, T** out) {
-    *out = static_cast<T*>(static_cast<WrappableBase*>(
-        internal::FromV8Impl(isolate, val, &T::kWrapperInfo)));
+    *out = static_cast<T*>(static_cast<Wrappable*>(
+        internal::FromV8Impl(isolate, val)));
     return *out != NULL;
   }
 };

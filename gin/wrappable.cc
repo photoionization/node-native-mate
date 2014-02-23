@@ -9,27 +9,26 @@
 
 namespace gin {
 
-WrappableBase::WrappableBase() {
+Wrappable::Wrappable() {
 }
 
-WrappableBase::~WrappableBase() {
+Wrappable::~Wrappable() {
   wrapper_.Reset();
 }
 
-ObjectTemplateBuilder WrappableBase::GetObjectTemplateBuilder(
+ObjectTemplateBuilder Wrappable::GetObjectTemplateBuilder(
     v8::Isolate* isolate) {
   return ObjectTemplateBuilder(isolate);
 }
 
-void WrappableBase::WeakCallback(
-    const v8::WeakCallbackData<v8::Object, WrappableBase>& data) {
-  WrappableBase* wrappable = data.GetParameter();
+void Wrappable::WeakCallback(
+    const v8::WeakCallbackData<v8::Object, Wrappable>& data) {
+  Wrappable* wrappable = data.GetParameter();
   wrappable->wrapper_.Reset();
   delete wrappable;
 }
 
-v8::Handle<v8::Object> WrappableBase::GetWrapperImpl(v8::Isolate* isolate,
-                                                     WrapperInfo* info) {
+v8::Handle<v8::Object> Wrappable::GetWrapper(v8::Isolate* isolate) {
   if (!wrapper_.IsEmpty()) {
     return v8::Local<v8::Object>::New(isolate, wrapper_);
   }
@@ -37,10 +36,9 @@ v8::Handle<v8::Object> WrappableBase::GetWrapperImpl(v8::Isolate* isolate,
   v8::Local<v8::ObjectTemplate> templ =
       GetObjectTemplateBuilder(isolate).Build();
   CHECK(!templ.IsEmpty());
-  CHECK_EQ(kNumberOfInternalFields, templ->InternalFieldCount());
+  CHECK_EQ(1, templ->InternalFieldCount());
   v8::Handle<v8::Object> wrapper = templ->NewInstance();
-  wrapper->SetAlignedPointerInInternalField(kWrapperInfoIndex, info);
-  wrapper->SetAlignedPointerInInternalField(kEncodedValueIndex, this);
+  wrapper->SetAlignedPointerInInternalField(0, this);
   wrapper_.Reset(isolate, wrapper);
   wrapper_.SetWeak(this, WeakCallback);
   return wrapper;
@@ -48,25 +46,11 @@ v8::Handle<v8::Object> WrappableBase::GetWrapperImpl(v8::Isolate* isolate,
 
 namespace internal {
 
-void* FromV8Impl(v8::Isolate* isolate, v8::Handle<v8::Value> val,
-                 WrapperInfo* wrapper_info) {
+void* FromV8Impl(v8::Isolate* isolate, v8::Handle<v8::Value> val) {
   if (!val->IsObject())
     return NULL;
   v8::Handle<v8::Object> obj = v8::Handle<v8::Object>::Cast(val);
-  WrapperInfo* info = WrapperInfo::From(obj);
-
-  // If this fails, the object is not managed by Gin. It is either a normal JS
-  // object that's not wrapping any external C++ object, or it is wrapping some
-  // C++ object, but that object isn't managed by Gin (maybe Blink).
-  if (!info)
-    return NULL;
-
-  // If this fails, the object is managed by Gin, but it's not wrapping an
-  // instance of the C++ class associated with wrapper_info.
-  if (info != wrapper_info)
-    return NULL;
-
-  return obj->GetAlignedPointerFromInternalField(kEncodedValueIndex);
+  return obj->GetAlignedPointerFromInternalField(0);
 }
 
 }  // namespace internal
