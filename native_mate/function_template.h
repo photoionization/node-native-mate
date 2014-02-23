@@ -50,8 +50,12 @@ class CallbackHolderBase {
   virtual ~CallbackHolderBase();
 
  private:
+#if NODE_VERSION_AT_LEAST(0, 11, 0)
   static void WeakCallback(
       const v8::WeakCallbackData<v8::External, CallbackHolderBase>& data);
+#else
+  static void WeakCallback(v8::Persistent<v8::Value> object, void* parameter);
+#endif
 
   v8::Persistent<v8::External> v8_ref_;
 

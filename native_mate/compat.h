@@ -31,7 +31,7 @@
     handle(isolate, value)
 #define MATE_PERSISTENT_ASSIGN(type, isolate, handle, value) \
     handle.Reset(isolate, value)
-#define MATE_PERSISTENT_DISPOSE(handle) \
+#define MATE_PERSISTENT_RESET(handle) \
     handle.Reset()
 #define MATE_PERSISTENT_TO_LOCAL(type, isolate, handle) \
     v8::Local<type>::New(isolate, handle)
@@ -63,13 +63,13 @@
     handle(value)
 #define MATE_PERSISTENT_ASSIGN(type, isolate, handle, object) \
     handle = v8::Persistent<type>::New(obj)
-#define MATE_PERSISTENT_DISPOSE(handle) \
-    handle.Dispose() \
+#define MATE_PERSISTENT_RESET(handle) \
+    handle.Dispose(); \
     handle.Clear()
 #define MATE_PERSISTENT_TO_LOCAL(type, isolate, handle) \
     v8::Local<type>::New(handle)
 #define MATE_PERSISTENT_SET_WEAK(handle, parameter, callback) \
-    handle.MakeWeak(parameters, callback)
+    handle.MakeWeak(parameter, callback)
 
 #endif  // (NODE_MODULE_VERSION > 0x000B)
 
