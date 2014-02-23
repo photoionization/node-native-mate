@@ -27,12 +27,16 @@
 #define MATE_GET_INTERNAL_FIELD_POINTER(object, index) \
     object->GetAlignedPointerFromInternalField(index)
 
-#define MATE_PERSISTENT_ASSIGN(type, isolate, handle, object) \
-    handle.Reset(isolate, object)
+#define MATE_PERSISTENT_INIT(isolate, handle, value) \
+    handle(isolate, value)
+#define MATE_PERSISTENT_ASSIGN(type, isolate, handle, value) \
+    handle.Reset(isolate, value)
 #define MATE_PERSISTENT_DISPOSE(handle) \
     handle.Reset()
 #define MATE_PERSISTENT_TO_LOCAL(type, isolate, handle) \
     v8::Local<type>::New(isolate, handle)
+#define MATE_PERSISTENT_SET_WEAK(handle, parameter, callback) \
+    handle.SetWeak(parameter, callback)
 
 #else  // Node 0.8 and 0.10
 
@@ -55,6 +59,8 @@
 #define MATE_GET_INTERNAL_FIELD_POINTER(object, index) \
     object->GetPointerFromInternalField(index)
 
+#define MATE_PERSISTENT_INIT(isolate, handle, value) \
+    handle(value)
 #define MATE_PERSISTENT_ASSIGN(type, isolate, handle, object) \
     handle = v8::Persistent<type>::New(obj)
 #define MATE_PERSISTENT_DISPOSE(handle) \
@@ -62,6 +68,8 @@
     handle.Clear()
 #define MATE_PERSISTENT_TO_LOCAL(type, isolate, handle) \
     v8::Local<type>::New(handle)
+#define MATE_PERSISTENT_SET_WEAK(handle, parameter, callback) \
+    handle.MakeWeak(parameters, callback)
 
 #endif  // (NODE_MODULE_VERSION > 0x000B)
 
