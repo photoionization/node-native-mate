@@ -7,7 +7,7 @@
 #include "base/logging.h"
 #include "native_mate/object_template_builder.h"
 
-namespace nm {
+namespace mate {
 
 Wrappable::Wrappable() {
 }
@@ -55,4 +55,4 @@ void* FromV8Impl(v8::Isolate* isolate, v8::Handle<v8::Value> val) {
 
 }  // namespace internal
 
-}  // namespace nm
+}  // namespace mate

@@ -8,7 +8,7 @@
 #include "base/memory/ref_counted.h"
 #include "v8/include/v8.h"
 
-namespace nm {
+namespace mate {
 
 // A v8::Persistent handle to a V8 value which destroys and clears the
 // underlying handle on destruction.
@@ -106,6 +106,6 @@ class RefCountedPersistent : public ScopedPersistent<T>,
   DISALLOW_COPY_AND_ASSIGN(RefCountedPersistent);
 };
 
-}  // namespace nm
+}  // namespace mate
 
 #endif  // NATIVE_MATE_SCOPED_PERSISTENT_H_

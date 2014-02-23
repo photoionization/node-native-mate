@@ -8,7 +8,7 @@
 #include "base/basictypes.h"
 #include "native_mate/converter.h"
 
-namespace nm {
+namespace mate {
 
 // Arguments is a wrapper around v8::FunctionCallbackInfo that integrates
 // with Converter to make it easier to marshall arguments and return values
@@ -74,6 +74,6 @@ class Arguments {
   bool insufficient_arguments_;
 };
 
-}  // namespace nm
+}  // namespace mate
 
 #endif  // NATIVE_MATE_ARGUMENTS_H_

@@ -11,7 +11,7 @@
 #include "base/strings/string_piece.h"
 #include "v8/include/v8.h"
 
-namespace nm {
+namespace mate {
 
 template<typename T, typename Enable = void>
 struct Converter {};
@@ -197,6 +197,6 @@ bool ConvertFromV8(v8::Isolate* isolate, v8::Handle<v8::Value> input,
 
 std::string V8ToString(v8::Handle<v8::Value> value);
 
-}  // namespace nm
+}  // namespace mate
 
 #endif  // NATIVE_MATE_CONVERTER_H_

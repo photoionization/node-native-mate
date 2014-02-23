@@ -8,7 +8,7 @@
 #include "base/template_util.h"
 #include "native_mate/converter.h"
 
-namespace nm {
+namespace mate {
 
 namespace internal {
 
@@ -18,25 +18,25 @@ void* FromV8Impl(v8::Isolate* isolate, v8::Handle<v8::Value> val);
 
 
 // Wrappable is a base class for C++ objects that have corresponding v8 wrapper
-// objects. To retain a Wrappable object on the stack, use a nm::Handle.
+// objects. To retain a Wrappable object on the stack, use a mate::Handle.
 //
 // USAGE:
 // // my_class.h
 // class MyClass : Wrappable {
 //  public:
 //   // Optional, only required if non-empty template should be used.
-//   virtual nm::ObjectTemplateBuilder GetObjectTemplateBuilder(
+//   virtual mate::ObjectTemplateBuilder GetObjectTemplateBuilder(
 //       v8::Isolate* isolate);
 //   ...
 // };
 //
-// nm::ObjectTemplateBuilder MyClass::GetObjectTemplateBuilder(
+// mate::ObjectTemplateBuilder MyClass::GetObjectTemplateBuilder(
 //     v8::Isolate* isolate) {
 //   return Wrappable::GetObjectTemplateBuilder(isolate).SetValue("foobar", 42);
 // }
 //
 // Subclasses should also typically have private constructors and expose a
-// static Create function that returns a nm::Handle. Forcing creators through
+// static Create function that returns a mate::Handle. Forcing creators through
 // this static Create function will enforce that clients actually create a
 // wrapper for the object. If clients fail to create a wrapper for a wrappable
 // object, the object will leak because we use the weak callback from the
@@ -80,6 +80,6 @@ struct Converter<T*, typename base::enable_if<
   }
 };
 
-}  // namespace nm
+}  // namespace mate
 
 #endif  // NATIVE_MATE_WRAPPABLE_H_

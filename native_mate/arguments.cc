@@ -7,7 +7,7 @@
 #include "base/strings/stringprintf.h"
 #include "native_mate/converter.h"
 
-namespace nm {
+namespace mate {
 
 Arguments::Arguments()
     : isolate_(NULL),
@@ -45,4 +45,4 @@ void Arguments::ThrowTypeError(const std::string& message) const {
       StringToV8(isolate_, message)));
 }
 
-}  // namespace nm
+}  // namespace mate

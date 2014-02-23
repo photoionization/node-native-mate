@@ -8,7 +8,7 @@
 
 #include "native_mate/converter.h"
 
-namespace nm {
+namespace mate {
 
 TryCatch::TryCatch() {
 }
@@ -46,4 +46,4 @@ std::string TryCatch::GetStackTrace() {
   return ss.str();
 }
 
-}  // namespace nm
+}  // namespace mate

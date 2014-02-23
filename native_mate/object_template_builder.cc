@@ -4,7 +4,7 @@
 
 #include "native_mate/object_template_builder.h"
 
-namespace nm {
+namespace mate {
 
 ObjectTemplateBuilder::ObjectTemplateBuilder(v8::Isolate* isolate)
     : isolate_(isolate), template_(v8::ObjectTemplate::New()) {
@@ -34,4 +34,4 @@ v8::Local<v8::ObjectTemplate> ObjectTemplateBuilder::Build() {
   return result;
 }
 
-}  // namespace nm
+}  // namespace mate

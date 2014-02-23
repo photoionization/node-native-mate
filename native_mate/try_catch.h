@@ -10,7 +10,7 @@
 #include "base/basictypes.h"
 #include "v8/include/v8.h"
 
-namespace nm {
+namespace mate {
 
 // TryCatch is a convenient wrapper around v8::TryCatch.
 class TryCatch {
@@ -27,6 +27,6 @@ class TryCatch {
   DISALLOW_COPY_AND_ASSIGN(TryCatch);
 };
 
-}  // namespace nm
+}  // namespace mate
 
 #endif  // NATIVE_MATE_TRY_CATCH_H_

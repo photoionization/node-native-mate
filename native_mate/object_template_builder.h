@@ -13,7 +13,7 @@
 #include "native_mate/function_template.h"
 #include "v8/include/v8.h"
 
-namespace nm {
+namespace mate {
 
 namespace {
 
@@ -81,7 +81,7 @@ class ObjectTemplateBuilder {
 
   // In the following methods, T and U can be function pointer, member function
   // pointer, base::Callback, or v8::FunctionTemplate. Most clients will want to
-  // use one of the first two options. Also see nm::CreateFunctionTemplate()
+  // use one of the first two options. Also see mate::CreateFunctionTemplate()
   // for creating raw function templates.
   template<typename T>
   ObjectTemplateBuilder& SetMethod(const base::StringPiece& name,
@@ -118,6 +118,6 @@ class ObjectTemplateBuilder {
   v8::Local<v8::ObjectTemplate> template_;
 };
 
-}  // namespace nm
+}  // namespace mate
 
 #endif  // NATIVE_MATE_OBJECT_TEMPLATE_BUILDER_H_

@@ -18,7 +18,7 @@ using v8::Object;
 using v8::String;
 using v8::Value;
 
-namespace nm {
+namespace mate {
 
 Handle<Value> Converter<bool>::ToV8(Isolate* isolate, bool val) {
   return Boolean::New(val).As<Value>();
@@ -202,4 +202,4 @@ std::string V8ToString(v8::Handle<v8::Value> value) {
   return result;
 }
 
-}  // namespace nm
+}  // namespace mate

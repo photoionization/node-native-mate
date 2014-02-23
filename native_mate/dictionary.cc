@@ -4,7 +4,7 @@
 
 #include "native_mate/dictionary.h"
 
-namespace nm {
+namespace mate {
 
 Dictionary::Dictionary(v8::Isolate* isolate)
     : isolate_(isolate) {
@@ -39,4 +39,4 @@ bool Converter<Dictionary>::FromV8(v8::Isolate* isolate,
   return true;
 }
 
-}  // namespace nm
+}  // namespace mate

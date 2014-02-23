@@ -7,7 +7,7 @@
 
 #include "native_mate/converter.h"
 
-namespace nm {
+namespace mate {
 
 // Dictionary is useful when writing bindings for a function that either
 // receives an arbitrary JavaScript object as an argument or returns an
@@ -59,6 +59,6 @@ struct Converter<Dictionary> {
                      Dictionary* out);
 };
 
-}  // namespace nm
+}  // namespace mate
 
 #endif  // NATIVE_MATE_DICTIONARY_H_

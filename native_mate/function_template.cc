@@ -4,7 +4,7 @@
 
 #include "native_mate/function_template.h"
 
-namespace nm {
+namespace mate {
 
 namespace internal {
 
@@ -30,4 +30,4 @@ void CallbackHolderBase::WeakCallback(
 
 }  // namespace internal
 
-}  // namespace nm
+}  // namespace mate

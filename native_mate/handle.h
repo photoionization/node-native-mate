@@ -7,10 +7,10 @@
 
 #include "native_mate/converter.h"
 
-namespace nm {
+namespace mate {
 
-// You can use nm::Handle on the stack to retain a nm::Wrappable object.
-// Currently we don't have a mechanism for retaining a nm::Wrappable object
+// You can use mate::Handle on the stack to retain a mate::Wrappable object.
+// Currently we don't have a mechanism for retaining a mate::Wrappable object
 // in the C++ heap because strong references from C++ to V8 can cause memory
 // leaks.
 template<typename T>
@@ -40,18 +40,18 @@ class Handle {
 };
 
 template<typename T>
-struct Converter<nm::Handle<T> > {
+struct Converter<mate::Handle<T> > {
   static v8::Handle<v8::Value> ToV8(v8::Isolate* isolate,
-                                    const nm::Handle<T>& val) {
+                                    const mate::Handle<T>& val) {
     return val.ToV8();
   }
   static bool FromV8(v8::Isolate* isolate, v8::Handle<v8::Value> val,
-                     nm::Handle<T>* out) {
+                     mate::Handle<T>* out) {
     T* object = NULL;
     if (!Converter<T*>::FromV8(isolate, val, &object)) {
       return false;
     }
-    *out = nm::Handle<T>(val, object);
+    *out = mate::Handle<T>(val, object);
     return true;
   }
 };
@@ -59,10 +59,10 @@ struct Converter<nm::Handle<T> > {
 // This function is a convenient way to create a handle from a raw pointer
 // without having to write out the type of the object explicitly.
 template<typename T>
-nm::Handle<T> CreateHandle(v8::Isolate* isolate, T* object) {
-  return nm::Handle<T>(object->GetWrapper(isolate), object);
+mate::Handle<T> CreateHandle(v8::Isolate* isolate, T* object) {
+  return mate::Handle<T>(object->GetWrapper(isolate), object);
 }
 
-}  // namespace nm
+}  // namespace mate
 
 #endif  // NATIVE_MATE_HANDLE_H_
