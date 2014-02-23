@@ -5,6 +5,8 @@
 #ifndef NATIVE_MATE_COMPAT_H_
 #define NATIVE_MATE_COMPAT_H_
 
+#include "node_version.h"
+
 #if (NODE_MODULE_VERSION > 0x000B) // Node 0.11+
 
 #define MATE_METHOD_ARGS_TYPE   v8::FunctionCallbackInfo<v8::Value>
