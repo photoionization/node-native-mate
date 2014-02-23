@@ -29,6 +29,7 @@
         'native_mate/handle.h',
         'native_mate/object_template_builder.cc',
         'native_mate/object_template_builder.h',
+        'native_mate/scoped_persistent.h',
         'native_mate/try_catch.cc',
         'native_mate/try_catch.h',
         'native_mate/wrappable.cc',
