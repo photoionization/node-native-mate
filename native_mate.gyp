@@ -7,7 +7,6 @@
         'include_dirs': [
           '.',
           'header_redirect',
-          'vendor',
         ],
       },
       'export_dependent_settings': [ 'vendor/base-minimal/base.gyp:base', ],
