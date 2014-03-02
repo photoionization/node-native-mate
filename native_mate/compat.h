@@ -9,6 +9,8 @@
 
 #if (NODE_MODULE_VERSION > 0x000B) // Node 0.11+
 
+#define MATE_HANDLE_SCOPE(isolate) v8::HandleScope handle_scope(isolate)
+
 #define MATE_METHOD_ARGS_TYPE   v8::FunctionCallbackInfo<v8::Value>
 #define MATE_METHOD_RETURN_TYPE void
 
@@ -41,9 +43,11 @@
 #define MATE_WEAK_CALLBACK(name, v8_type, c_type) \
   void name(const v8::WeakCallbackData<v8_type, c_type>& data)
 #define MATE_WEAK_CALLBACK_INIT(c_type) \
-  c_type* self = data.GetParameter();
+  c_type* self = data.GetParameter()
 
 #else  // Node 0.8 and 0.10
+
+#define MATE_HANDLE_SCOPE(isolate) v8::HandleScope handle_scope
 
 #define MATE_METHOD_ARGS_TYPE   v8::Arguments
 #define MATE_METHOD_RETURN_TYPE v8::Handle<v8::Value>
@@ -79,7 +83,7 @@
 #define MATE_WEAK_CALLBACK(name, v8_type, c_type) \
   void name(v8::Persistent<v8::Value> object, void* parameter)
 #define MATE_WEAK_CALLBACK_INIT(c_type) \
-  c_type* self = static_cast<c_type*>(parameter);
+  c_type* self = static_cast<c_type*>(parameter)
 
 #endif  // (NODE_MODULE_VERSION > 0x000B)
 
