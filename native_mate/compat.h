@@ -84,16 +84,13 @@
 #endif  // (NODE_MODULE_VERSION > 0x000B)
 
 
+// Generally we should not provide utility macros, but this just makes things
+// much more comfortable so we keep it.
 #define MATE_METHOD(name) \
     MATE_METHOD_RETURN_TYPE name(const MATE_METHOD_ARGS_TYPE& info)
 
-#define MATE_THROW_EXCEPTION(type, message) \
-    v8::ThrowException(type(v8::String::New(message)))
-#define MATE_THROW_ERROR(message) \
-    MATE_THROW_EXCEPTION(v8::Exception::Error, message)
-#define MATE_THROW_TYPE_ERROR(message) \
-    MATE_THROW_EXCEPTION(v8::Exception::TypeError, message)
-#define MATE_THROW_SYNTAX_ERROR(message) \
-    MATE_THROW_EXCEPTION(v8::Exception::SyntaxError, message)
+// In lastest V8 ThrowException would need to pass isolate, be prepared for it.
+#define MATE_THROW_EXCEPTION(isolate, value) \
+    v8::ThrowException(value)
 
 #endif  // NATIVE_MATE_COMPAT_H_

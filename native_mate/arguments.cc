@@ -41,7 +41,8 @@ void Arguments::ThrowError() const {
 }
 
 void Arguments::ThrowTypeError(const std::string& message) const {
-  MATE_THROW_TYPE_ERROR(message.c_str());
+  MATE_THROW_EXCEPTION(isolate_, v8::Exception::TypeError(
+      StringToV8(isolate_, message)));
 }
 
 }  // namespace mate
