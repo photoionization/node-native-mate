@@ -1,8 +1,8 @@
 {
-  "main": "",
   "name": "native-mate",
-  "description": "Make writing node native modules easier",
+  "description": "A non-intrusive lightweight bindings for V8 and libuv",
   "version": "0.1.0",
+  "main": "dependency.js",
   "licenses": [
     {
       "type": "MIT",

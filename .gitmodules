@@ -1,6 +1,3 @@
 [submodule "vendor/base-minimal"]
 	path = vendor/base-minimal
 	url = https://github.com/zcbenz/base-minimal.git
-[submodule "vendor/nan"]
-	path = vendor/nan
-	url = https://github.com/rvagg/nan.git
