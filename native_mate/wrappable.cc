@@ -13,7 +13,7 @@ Wrappable::Wrappable() {
 }
 
 Wrappable::~Wrappable() {
-  wrapper_.Reset();
+  MATE_PERSISTENT_RESET(wrapper_);
 }
 
 ObjectTemplateBuilder Wrappable::GetObjectTemplateBuilder(
@@ -21,16 +21,16 @@ ObjectTemplateBuilder Wrappable::GetObjectTemplateBuilder(
   return ObjectTemplateBuilder(isolate);
 }
 
-void Wrappable::WeakCallback(
-    const v8::WeakCallbackData<v8::Object, Wrappable>& data) {
-  Wrappable* wrappable = data.GetParameter();
-  wrappable->wrapper_.Reset();
-  delete wrappable;
+// static
+MATE_WEAK_CALLBACK(Wrappable::WeakCallback, v8::Object, Wrappable) {
+  MATE_WEAK_CALLBACK_INIT(Wrappable);
+  MATE_PERSISTENT_RESET(self->wrapper_);
+  delete self;
 }
 
 v8::Handle<v8::Object> Wrappable::GetWrapper(v8::Isolate* isolate) {
   if (!wrapper_.IsEmpty()) {
-    return v8::Local<v8::Object>::New(isolate, wrapper_);
+    return MATE_PERSISTENT_TO_LOCAL(v8::Object, isolate, wrapper_);
   }
 
   v8::Local<v8::ObjectTemplate> templ =
@@ -38,9 +38,9 @@ v8::Handle<v8::Object> Wrappable::GetWrapper(v8::Isolate* isolate) {
   CHECK(!templ.IsEmpty());
   CHECK_EQ(1, templ->InternalFieldCount());
   v8::Handle<v8::Object> wrapper = templ->NewInstance();
-  wrapper->SetAlignedPointerInInternalField(0, this);
-  wrapper_.Reset(isolate, wrapper);
-  wrapper_.SetWeak(this, WeakCallback);
+  MATE_SET_INTERNAL_FIELD_POINTER(wrapper, 0, this);
+  MATE_PERSISTENT_ASSIGN(v8::Object, isolate, wrapper_, wrapper);
+  MATE_PERSISTENT_SET_WEAK(wrapper_, this, WeakCallback);
   return wrapper;
 }
 
@@ -50,7 +50,7 @@ void* FromV8Impl(v8::Isolate* isolate, v8::Handle<v8::Value> val) {
   if (!val->IsObject())
     return NULL;
   v8::Handle<v8::Object> obj = v8::Handle<v8::Object>::Cast(val);
-  return obj->GetAlignedPointerFromInternalField(0);
+  return MATE_GET_INTERNAL_FIELD_POINTER(obj, 0);
 }
 
 }  // namespace internal

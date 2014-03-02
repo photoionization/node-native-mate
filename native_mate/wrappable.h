@@ -6,6 +6,7 @@
 #define NATIVE_MATE_WRAPPABLE_H_
 
 #include "base/template_util.h"
+#include "native_mate/compat.h"
 #include "native_mate/converter.h"
 
 namespace mate {
@@ -56,8 +57,7 @@ class Wrappable {
   virtual ObjectTemplateBuilder GetObjectTemplateBuilder(v8::Isolate* isolate);
 
  private:
-  static void WeakCallback(
-      const v8::WeakCallbackData<v8::Object, Wrappable>& data);
+  static MATE_WEAK_CALLBACK(WeakCallback, v8::Object, Wrappable);
 
   v8::Persistent<v8::Object> wrapper_;  // Weak
 

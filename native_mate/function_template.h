@@ -50,8 +50,7 @@ class CallbackHolderBase {
   virtual ~CallbackHolderBase();
 
  private:
-  static void WeakCallback(
-      const v8::WeakCallbackData<v8::External, CallbackHolderBase>& data);
+  static MATE_WEAK_CALLBACK(WeakCallback, v8::External, CallbackHolderBase);
 
   v8::Persistent<v8::External> v8_ref_;
 
@@ -85,8 +84,8 @@ template<typename R, typename P1 = void, typename P2 = void,
     typename P3 = void, typename P4 = void, typename P5 = void,
     typename P6 = void>
 struct Invoker {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<R(P1, P2, P3, P4, P5, P6)>& callback,
       const P1& a1,
       const P2& a2,
@@ -94,14 +93,14 @@ struct Invoker {
       const P4& a4,
       const P5& a5,
       const P6& a6) {
-    args->Return(callback.Run(a1, a2, a3, a4, a5, a6));
+    MATE_METHOD_RETURN(callback.Run(a1, a2, a3, a4, a5, a6));
   }
 };
 template<typename P1, typename P2, typename P3, typename P4, typename P5,
     typename P6>
 struct Invoker<void, P1, P2, P3, P4, P5, P6> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<void(P1, P2, P3, P4, P5, P6)>& callback,
       const P1& a1,
       const P2& a2,
@@ -110,27 +109,28 @@ struct Invoker<void, P1, P2, P3, P4, P5, P6> {
       const P5& a5,
       const P6& a6) {
     callback.Run(a1, a2, a3, a4, a5, a6);
+    MATE_METHOD_RETURN_UNDEFINED();
   }
 };
 
 template<typename R, typename P1, typename P2, typename P3, typename P4,
     typename P5>
 struct Invoker<R, P1, P2, P3, P4, P5, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<R(P1, P2, P3, P4, P5)>& callback,
       const P1& a1,
       const P2& a2,
       const P3& a3,
       const P4& a4,
       const P5& a5) {
-    args->Return(callback.Run(a1, a2, a3, a4, a5));
+    MATE_METHOD_RETURN(callback.Run(a1, a2, a3, a4, a5));
   }
 };
 template<typename P1, typename P2, typename P3, typename P4, typename P5>
 struct Invoker<void, P1, P2, P3, P4, P5, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<void(P1, P2, P3, P4, P5)>& callback,
       const P1& a1,
       const P2& a2,
@@ -138,111 +138,116 @@ struct Invoker<void, P1, P2, P3, P4, P5, void> {
       const P4& a4,
       const P5& a5) {
     callback.Run(a1, a2, a3, a4, a5);
+    MATE_METHOD_RETURN_UNDEFINED();
   }
 };
 
 template<typename R, typename P1, typename P2, typename P3, typename P4>
 struct Invoker<R, P1, P2, P3, P4, void, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<R(P1, P2, P3, P4)>& callback,
       const P1& a1,
       const P2& a2,
       const P3& a3,
       const P4& a4) {
-    args->Return(callback.Run(a1, a2, a3, a4));
+    MATE_METHOD_RETURN(callback.Run(a1, a2, a3, a4));
   }
 };
 template<typename P1, typename P2, typename P3, typename P4>
 struct Invoker<void, P1, P2, P3, P4, void, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<void(P1, P2, P3, P4)>& callback,
       const P1& a1,
       const P2& a2,
       const P3& a3,
       const P4& a4) {
     callback.Run(a1, a2, a3, a4);
+    MATE_METHOD_RETURN_UNDEFINED();
   }
 };
 
 template<typename R, typename P1, typename P2, typename P3>
 struct Invoker<R, P1, P2, P3, void, void, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<R(P1, P2, P3)>& callback,
       const P1& a1,
       const P2& a2,
       const P3& a3) {
-    args->Return(callback.Run(a1, a2, a3));
+    MATE_METHOD_RETURN(callback.Run(a1, a2, a3));
   }
 };
 template<typename P1, typename P2, typename P3>
 struct Invoker<void, P1, P2, P3, void, void, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<void(P1, P2, P3)>& callback,
       const P1& a1,
       const P2& a2,
       const P3& a3) {
     callback.Run(a1, a2, a3);
+    MATE_METHOD_RETURN_UNDEFINED();
   }
 };
 
 template<typename R, typename P1, typename P2>
 struct Invoker<R, P1, P2, void, void, void, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<R(P1, P2)>& callback,
       const P1& a1,
       const P2& a2) {
-    args->Return(callback.Run(a1, a2));
+    MATE_METHOD_RETURN(callback.Run(a1, a2));
   }
 };
 template<typename P1, typename P2>
 struct Invoker<void, P1, P2, void, void, void, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<void(P1, P2)>& callback,
       const P1& a1,
       const P2& a2) {
     callback.Run(a1, a2);
+    MATE_METHOD_RETURN_UNDEFINED();
   }
 };
 
 template<typename R, typename P1>
 struct Invoker<R, P1, void, void, void, void, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<R(P1)>& callback,
       const P1& a1) {
-    args->Return(callback.Run(a1));
+    MATE_METHOD_RETURN(callback.Run(a1));
   }
 };
 template<typename P1>
 struct Invoker<void, P1, void, void, void, void, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<void(P1)>& callback,
       const P1& a1) {
-    callback.Run(a1);
+    MATE_METHOD_RETURN(callback.Run(a1));
   }
 };
 
 template<typename R>
 struct Invoker<R, void, void, void, void, void, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<R()>& callback) {
-    args->Return(callback.Run());
+    MATE_METHOD_RETURN(callback.Run());
   }
 };
 template<>
 struct Invoker<void, void, void, void, void, void, void> {
-  inline static void Go(
-      Arguments* args,
+  inline static MATE_METHOD_RETURN_TYPE Go(
+      Arguments& args,
       const base::Callback<void()>& callback) {
     callback.Run();
+    MATE_METHOD_RETURN_UNDEFINED();
   }
 };
 
@@ -286,8 +291,7 @@ struct Dispatcher {
 
 template<typename R>
 struct Dispatcher<R()> {
-  static void DispatchToCallback(
-      const v8::FunctionCallbackInfo<v8::Value>& info) {
+  static MATE_METHOD(DispatchToCallback) {
     Arguments args(info);
     v8::Handle<v8::External> v8_holder;
     CHECK(args.GetData(&v8_holder));
@@ -297,14 +301,13 @@ struct Dispatcher<R()> {
     typedef CallbackHolder<R()> HolderT;
     HolderT* holder = static_cast<HolderT*>(holder_base);
 
-    Invoker<R>::Go(&args, holder->callback);
+    return Invoker<R>::Go(args, holder->callback);
   }
 };
 
 template<typename R, typename P1>
 struct Dispatcher<R(P1)> {
-  static void DispatchToCallback(
-      const v8::FunctionCallbackInfo<v8::Value>& info) {
+  static MATE_METHOD(DispatchToCallback) {
     Arguments args(info);
     v8::Handle<v8::External> v8_holder;
     CHECK(args.GetData(&v8_holder));
@@ -315,19 +318,18 @@ struct Dispatcher<R(P1)> {
     HolderT* holder = static_cast<HolderT*>(holder_base);
 
     typename CallbackParamTraits<P1>::LocalType a1;
-    if (!GetNextArgument(&args, holder->flags, true, &a1)) {
+    if (!GetNextArgument(args, holder->flags, true, &a1)) {
       args.ThrowError();
-      return;
+      MATE_METHOD_RETURN_UNDEFINED();
     }
 
-    Invoker<R, P1>::Go(&args, holder->callback, a1);
+    return Invoker<R, P1>::Go(args, holder->callback, a1);
   }
 };
 
 template<typename R, typename P1, typename P2>
 struct Dispatcher<R(P1, P2)> {
-  static void DispatchToCallback(
-      const v8::FunctionCallbackInfo<v8::Value>& info) {
+  static MATE_METHOD(DispatchToCallback) {
     Arguments args(info);
     v8::Handle<v8::External> v8_holder;
     CHECK(args.GetData(&v8_holder));
@@ -339,20 +341,19 @@ struct Dispatcher<R(P1, P2)> {
 
     typename CallbackParamTraits<P1>::LocalType a1;
     typename CallbackParamTraits<P2>::LocalType a2;
-    if (!GetNextArgument(&args, holder->flags, true, &a1) ||
-        !GetNextArgument(&args, holder->flags, false, &a2)) {
+    if (!GetNextArgument(args, holder->flags, true, &a1) ||
+        !GetNextArgument(args, holder->flags, false, &a2)) {
       args.ThrowError();
-      return;
+      MATE_METHOD_RETURN_UNDEFINED();
     }
 
-    Invoker<R, P1, P2>::Go(&args, holder->callback, a1, a2);
+    return Invoker<R, P1, P2>::Go(args, holder->callback, a1, a2);
   }
 };
 
 template<typename R, typename P1, typename P2, typename P3>
 struct Dispatcher<R(P1, P2, P3)> {
-  static void DispatchToCallback(
-      const v8::FunctionCallbackInfo<v8::Value>& info) {
+  static MATE_METHOD(DispatchToCallback) {
     Arguments args(info);
     v8::Handle<v8::External> v8_holder;
     CHECK(args.GetData(&v8_holder));
@@ -365,21 +366,20 @@ struct Dispatcher<R(P1, P2, P3)> {
     typename CallbackParamTraits<P1>::LocalType a1;
     typename CallbackParamTraits<P2>::LocalType a2;
     typename CallbackParamTraits<P3>::LocalType a3;
-    if (!GetNextArgument(&args, holder->flags, true, &a1) ||
-        !GetNextArgument(&args, holder->flags, false, &a2) ||
-        !GetNextArgument(&args, holder->flags, false, &a3)) {
+    if (!GetNextArgument(args, holder->flags, true, &a1) ||
+        !GetNextArgument(args, holder->flags, false, &a2) ||
+        !GetNextArgument(args, holder->flags, false, &a3)) {
       args.ThrowError();
-      return;
+      MATE_METHOD_RETURN_UNDEFINED();
     }
 
-    Invoker<R, P1, P2, P3>::Go(&args, holder->callback, a1, a2, a3);
+    return Invoker<R, P1, P2, P3>::Go(args, holder->callback, a1, a2, a3);
   }
 };
 
 template<typename R, typename P1, typename P2, typename P3, typename P4>
 struct Dispatcher<R(P1, P2, P3, P4)> {
-  static void DispatchToCallback(
-      const v8::FunctionCallbackInfo<v8::Value>& info) {
+  static MATE_METHOD(DispatchToCallback) {
     Arguments args(info);
     v8::Handle<v8::External> v8_holder;
     CHECK(args.GetData(&v8_holder));
@@ -393,23 +393,23 @@ struct Dispatcher<R(P1, P2, P3, P4)> {
     typename CallbackParamTraits<P2>::LocalType a2;
     typename CallbackParamTraits<P3>::LocalType a3;
     typename CallbackParamTraits<P4>::LocalType a4;
-    if (!GetNextArgument(&args, holder->flags, true, &a1) ||
-        !GetNextArgument(&args, holder->flags, false, &a2) ||
-        !GetNextArgument(&args, holder->flags, false, &a3) ||
-        !GetNextArgument(&args, holder->flags, false, &a4)) {
+    if (!GetNextArgument(args, holder->flags, true, &a1) ||
+        !GetNextArgument(args, holder->flags, false, &a2) ||
+        !GetNextArgument(args, holder->flags, false, &a3) ||
+        !GetNextArgument(args, holder->flags, false, &a4)) {
       args.ThrowError();
-      return;
+      MATE_METHOD_RETURN_UNDEFINED();
     }
 
-    Invoker<R, P1, P2, P3, P4>::Go(&args, holder->callback, a1, a2, a3, a4);
+    return Invoker<R, P1, P2, P3, P4>::Go(args, holder->callback, a1, a2, a3,
+        a4);
   }
 };
 
 template<typename R, typename P1, typename P2, typename P3, typename P4,
     typename P5>
 struct Dispatcher<R(P1, P2, P3, P4, P5)> {
-  static void DispatchToCallback(
-      const v8::FunctionCallbackInfo<v8::Value>& info) {
+  static MATE_METHOD(DispatchToCallback) {
     Arguments args(info);
     v8::Handle<v8::External> v8_holder;
     CHECK(args.GetData(&v8_holder));
@@ -424,25 +424,24 @@ struct Dispatcher<R(P1, P2, P3, P4, P5)> {
     typename CallbackParamTraits<P3>::LocalType a3;
     typename CallbackParamTraits<P4>::LocalType a4;
     typename CallbackParamTraits<P5>::LocalType a5;
-    if (!GetNextArgument(&args, holder->flags, true, &a1) ||
-        !GetNextArgument(&args, holder->flags, false, &a2) ||
-        !GetNextArgument(&args, holder->flags, false, &a3) ||
-        !GetNextArgument(&args, holder->flags, false, &a4) ||
-        !GetNextArgument(&args, holder->flags, false, &a5)) {
+    if (!GetNextArgument(args, holder->flags, true, &a1) ||
+        !GetNextArgument(args, holder->flags, false, &a2) ||
+        !GetNextArgument(args, holder->flags, false, &a3) ||
+        !GetNextArgument(args, holder->flags, false, &a4) ||
+        !GetNextArgument(args, holder->flags, false, &a5)) {
       args.ThrowError();
-      return;
+      MATE_METHOD_RETURN_UNDEFINED();
     }
 
-    Invoker<R, P1, P2, P3, P4, P5>::Go(&args, holder->callback, a1, a2, a3, a4,
-        a5);
+    return Invoker<R, P1, P2, P3, P4, P5>::Go(args, holder->callback, a1, a2,
+        a3, a4, a5);
   }
 };
 
 template<typename R, typename P1, typename P2, typename P3, typename P4,
     typename P5, typename P6>
 struct Dispatcher<R(P1, P2, P3, P4, P5, P6)> {
-  static void DispatchToCallback(
-      const v8::FunctionCallbackInfo<v8::Value>& info) {
+  static MATE_METHOD(DispatchToCallback) {
     Arguments args(info);
     v8::Handle<v8::External> v8_holder;
     CHECK(args.GetData(&v8_holder));
@@ -458,18 +457,18 @@ struct Dispatcher<R(P1, P2, P3, P4, P5, P6)> {
     typename CallbackParamTraits<P4>::LocalType a4;
     typename CallbackParamTraits<P5>::LocalType a5;
     typename CallbackParamTraits<P6>::LocalType a6;
-    if (!GetNextArgument(&args, holder->flags, true, &a1) ||
-        !GetNextArgument(&args, holder->flags, false, &a2) ||
-        !GetNextArgument(&args, holder->flags, false, &a3) ||
-        !GetNextArgument(&args, holder->flags, false, &a4) ||
-        !GetNextArgument(&args, holder->flags, false, &a5) ||
-        !GetNextArgument(&args, holder->flags, false, &a6)) {
+    if (!GetNextArgument(args, holder->flags, true, &a1) ||
+        !GetNextArgument(args, holder->flags, false, &a2) ||
+        !GetNextArgument(args, holder->flags, false, &a3) ||
+        !GetNextArgument(args, holder->flags, false, &a4) ||
+        !GetNextArgument(args, holder->flags, false, &a5) ||
+        !GetNextArgument(args, holder->flags, false, &a6)) {
       args.ThrowError();
-      return;
+      MATE_METHOD_RETURN_UNDEFINED();
     }
 
-    Invoker<R, P1, P2, P3, P4, P5, P6>::Go(&args, holder->callback, a1, a2, a3,
-        a4, a5, a6);
+    return Invoker<R, P1, P2, P3, P4, P5, P6>::Go(args, holder->callback, a1,
+        a2, a3, a4, a5, a6);
   }
 };
 

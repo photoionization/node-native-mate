@@ -4,6 +4,7 @@
 
 #include "native_mate/converter.h"
 
+#include "native_mate/compat.h"
 #include "v8/include/v8.h"
 
 using v8::Boolean;
@@ -20,7 +21,7 @@ using v8::Value;
 namespace mate {
 
 Handle<Value> Converter<bool>::ToV8(Isolate* isolate, bool val) {
-  return Boolean::New(val).As<Value>();
+  return Boolean::New(val);
 }
 
 bool Converter<bool>::FromV8(Isolate* isolate, Handle<Value> val, bool* out) {
@@ -29,7 +30,7 @@ bool Converter<bool>::FromV8(Isolate* isolate, Handle<Value> val, bool* out) {
 }
 
 Handle<Value> Converter<int32_t>::ToV8(Isolate* isolate, int32_t val) {
-  return Integer::New(val).As<Value>();
+  return Integer::New(val);
 }
 
 bool Converter<int32_t>::FromV8(Isolate* isolate, Handle<Value> val,
@@ -41,7 +42,7 @@ bool Converter<int32_t>::FromV8(Isolate* isolate, Handle<Value> val,
 }
 
 Handle<Value> Converter<uint32_t>::ToV8(Isolate* isolate, uint32_t val) {
-  return Integer::NewFromUnsigned(val).As<Value>();
+  return Integer::NewFromUnsigned(val);
 }
 
 bool Converter<uint32_t>::FromV8(Isolate* isolate, Handle<Value> val,
@@ -53,7 +54,7 @@ bool Converter<uint32_t>::FromV8(Isolate* isolate, Handle<Value> val,
 }
 
 Handle<Value> Converter<int64_t>::ToV8(Isolate* isolate, int64_t val) {
-  return Number::New(static_cast<double>(val)).As<Value>();
+  return Number::New(static_cast<double>(val));
 }
 
 bool Converter<int64_t>::FromV8(Isolate* isolate, Handle<Value> val,
@@ -67,7 +68,7 @@ bool Converter<int64_t>::FromV8(Isolate* isolate, Handle<Value> val,
 }
 
 Handle<Value> Converter<uint64_t>::ToV8(Isolate* isolate, uint64_t val) {
-  return Number::New(static_cast<double>(val)).As<Value>();
+  return Number::New(static_cast<double>(val));
 }
 
 bool Converter<uint64_t>::FromV8(Isolate* isolate, Handle<Value> val,
@@ -79,7 +80,7 @@ bool Converter<uint64_t>::FromV8(Isolate* isolate, Handle<Value> val,
 }
 
 Handle<Value> Converter<float>::ToV8(Isolate* isolate, float val) {
-  return Number::New(val).As<Value>();
+  return Number::New(val);
 }
 
 bool Converter<float>::FromV8(Isolate* isolate, Handle<Value> val,
@@ -91,7 +92,7 @@ bool Converter<float>::FromV8(Isolate* isolate, Handle<Value> val,
 }
 
 Handle<Value> Converter<double>::ToV8(Isolate* isolate, double val) {
-  return Number::New(val).As<Value>();
+  return Number::New(val);
 }
 
 bool Converter<double>::FromV8(Isolate* isolate, Handle<Value> val,
@@ -104,8 +105,8 @@ bool Converter<double>::FromV8(Isolate* isolate, Handle<Value> val,
 
 Handle<Value> Converter<base::StringPiece>::ToV8(
     Isolate* isolate, const base::StringPiece& val) {
-  return String::NewFromUtf8(isolate, val.data(), String::kNormalString,
-                             static_cast<uint32_t>(val.length()));
+  return MATE_STRING_NEW_FROM_UTF8(isolate, val.data(),
+                                   static_cast<uint32_t>(val.length()));
 }
 
 Handle<Value> Converter<std::string>::ToV8(Isolate* isolate,
@@ -134,7 +135,7 @@ bool Converter<Handle<Function> >::FromV8(Isolate* isolate, Handle<Value> val,
 
 Handle<Value> Converter<Handle<Object> >::ToV8(Isolate* isolate,
                                                Handle<Object> val) {
-  return val.As<Value>();
+  return val;
 }
 
 bool Converter<Handle<Object> >::FromV8(Isolate* isolate, Handle<Value> val,
@@ -147,7 +148,7 @@ bool Converter<Handle<Object> >::FromV8(Isolate* isolate, Handle<Value> val,
 
 Handle<Value> Converter<Handle<External> >::ToV8(Isolate* isolate,
                                                  Handle<External> val) {
-  return val.As<Value>();
+  return val;
 }
 
 bool Converter<Handle<External> >::FromV8(Isolate* isolate,
@@ -172,10 +173,9 @@ bool Converter<Handle<Value> >::FromV8(Isolate* isolate, Handle<Value> val,
 
 v8::Handle<v8::String> StringToSymbol(v8::Isolate* isolate,
                                       const base::StringPiece& val) {
-  return String::NewFromUtf8(isolate,
-                             val.data(),
-                             String::kInternalizedString,
-                             static_cast<uint32_t>(val.length()));
+  return MATE_STRING_NEW_SYMBOL(isolate,
+                                val.data(),
+                                static_cast<uint32_t>(val.length()));
 }
 
 std::string V8ToString(v8::Handle<v8::Value> value) {

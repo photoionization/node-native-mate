@@ -9,8 +9,8 @@ namespace mate {
 namespace internal {
 
 CallbackHolderBase::CallbackHolderBase(v8::Isolate* isolate)
-    : v8_ref_(isolate, v8::External::New(isolate)) {
-  v8_ref_.SetWeak(this, &CallbackHolderBase::WeakCallback);
+    : MATE_PERSISTENT_INIT(isolate, v8_ref_, v8::External::New(isolate)) {
+  MATE_PERSISTENT_SET_WEAK(v8_ref_, this, &CallbackHolderBase::WeakCallback);
 }
 
 CallbackHolderBase::~CallbackHolderBase() {
@@ -18,14 +18,16 @@ CallbackHolderBase::~CallbackHolderBase() {
 }
 
 v8::Handle<v8::External> CallbackHolderBase::GetHandle(v8::Isolate* isolate) {
-  return v8::Local<v8::External>::New(isolate, v8_ref_);
+  return MATE_PERSISTENT_TO_LOCAL(v8::External, isolate, v8_ref_);
 }
 
 // static
-void CallbackHolderBase::WeakCallback(
-    const v8::WeakCallbackData<v8::External, CallbackHolderBase>& data) {
-  data.GetParameter()->v8_ref_.Reset();
-  delete data.GetParameter();
+MATE_WEAK_CALLBACK(CallbackHolderBase::WeakCallback,
+                   v8::External,
+                   CallbackHolderBase) {
+  MATE_WEAK_CALLBACK_INIT(CallbackHolderBase);
+  MATE_PERSISTENT_RESET(self->v8_ref_);
+  delete self;
 }
 
 }  // namespace internal
