@@ -35,7 +35,6 @@
         'native_mate/try_catch.h',
         'native_mate/wrappable.cc',
         'native_mate/wrappable.h',
-        'vendor/nan/nan.h',
       ],
     },
   ],
