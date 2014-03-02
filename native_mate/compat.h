@@ -38,6 +38,11 @@
 #define MATE_PERSISTENT_SET_WEAK(handle, parameter, callback) \
     handle.SetWeak(parameter, callback)
 
+#define MATE_WEAK_CALLBACK(name, v8_type, c_type) \
+  void name(const v8::WeakCallbackData<v8_type, c_type>& data)
+#define MATE_WEAK_CALLBACK_INIT(c_type) \
+  c_type* self = data.GetParameter();
+
 #else  // Node 0.8 and 0.10
 
 #define MATE_METHOD_ARGS_TYPE   v8::Arguments
@@ -61,8 +66,8 @@
 
 #define MATE_PERSISTENT_INIT(isolate, handle, value) \
     handle(value)
-#define MATE_PERSISTENT_ASSIGN(type, isolate, handle, object) \
-    handle = v8::Persistent<type>::New(obj)
+#define MATE_PERSISTENT_ASSIGN(type, isolate, handle, value) \
+    handle = v8::Persistent<type>::New(value)
 #define MATE_PERSISTENT_RESET(handle) \
     handle.Dispose(); \
     handle.Clear()
@@ -70,6 +75,11 @@
     v8::Local<type>::New(handle)
 #define MATE_PERSISTENT_SET_WEAK(handle, parameter, callback) \
     handle.MakeWeak(parameter, callback)
+
+#define MATE_WEAK_CALLBACK(name, v8_type, c_type) \
+  void name(v8::Persistent<v8::Value> object, void* parameter)
+#define MATE_WEAK_CALLBACK_INIT(c_type) \
+  c_type* self = static_cast<c_type*>(parameter);
 
 #endif  // (NODE_MODULE_VERSION > 0x000B)
 

@@ -22,20 +22,13 @@ v8::Handle<v8::External> CallbackHolderBase::GetHandle(v8::Isolate* isolate) {
 }
 
 // static
-#if NODE_VERSION_AT_LEAST(0, 11, 0)
-void CallbackHolderBase::WeakCallback(
-    const v8::WeakCallbackData<v8::External, CallbackHolderBase>& data) {
-  data.GetParameter()->v8_ref_.Reset();
-  delete data.GetParameter();
-}
-#else
-void CallbackHolderBase::WeakCallback(
-    v8::Persistent<v8::Value> object, void* parameter) {
-  CallbackHolderBase* self = static_cast<CallbackHolderBase*>(parameter);
+MATE_WEAK_CALLBACK(CallbackHolderBase::WeakCallback,
+                   v8::External,
+                   CallbackHolderBase) {
+  MATE_WEAK_CALLBACK_INIT(CallbackHolderBase);
   MATE_PERSISTENT_RESET(self->v8_ref_);
   delete self;
 }
-#endif
 
 }  // namespace internal
 
