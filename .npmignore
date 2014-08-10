@@ -1,0 +1,8 @@
+script
+tests
+build/
+node_modules/
+.*
+*.md
+*.pump
+*.swp
