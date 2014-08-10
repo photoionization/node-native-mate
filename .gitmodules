@@ -1,3 +1,6 @@
 [submodule "vendor/base-minimal"]
 	path = vendor/base-minimal
 	url = https://github.com/zcbenz/base-minimal.git
+[submodule "vendor/src"]
+	path = vendor/src
+	url = https://github.com/zcbenz/native-mate.git
