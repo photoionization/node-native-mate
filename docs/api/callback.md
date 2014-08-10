@@ -7,13 +7,13 @@ JavaScript functions.
 
 * Read [base/callback.h](https://github.com/zcbenz/base-minimal/blob/master/src/base/callback.h)
   on the `base::Callback` type.
-* Read [Converter](converter.md) on type convertions.
+* Read [Converter](converter.md) on type conversions.
 
 ## Synopsis
 
 Convert from V8 value to arbitrary function:
 
-```C++
+```c++
 #include "native_mate/callback.h"
 
 void CalledInJavaScript(v8::Isolate* isolate, v8::Handle<v8::Value> value) {
@@ -25,7 +25,7 @@ void CalledInJavaScript(v8::Isolate* isolate, v8::Handle<v8::Value> value) {
 
 Add a C++ method to V8 object:
 
-```C++
+```c++
 #include "base/strings/stringprintf.h"
 #include "native_mate/callback.h"
 #include "native_mate/dictionary.h"
