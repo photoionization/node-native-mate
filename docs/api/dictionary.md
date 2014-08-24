@@ -22,18 +22,18 @@ v8::Handle<v8::Value> CalledInJavaScript(v8::Isolate* isolate) {
 
 ## References
 
-### `Dictionary(v8::Isolate* isolate)`;
+### `Dictionary(v8::Isolate* isolate)`
 
 Creates an empty `Dictionary`.
 
-### `Dictionary(v8::Isolate* isolate, v8::Handle<v8::Object> object)`;
+### `Dictionary(v8::Isolate* isolate, v8::Handle<v8::Object> object)`
 
 Creates the `Dictionary` from `object`.
 
-### `template<typename T> bool Dictionary::Get(const base::StringPiece& key, T* out) const`;
+### `template<typename T> bool Dictionary::Get(const base::StringPiece& key, T* out) const`
 
 Reads the value of `key` property and saves to `out`.
 
-### `template<typename T> bool Dictionary::Set(const base::StringPiece& key, T val)`;
+### `template<typename T> bool Dictionary::Set(const base::StringPiece& key, T val)`
 
 Sets value of the `key` property to `val`.
