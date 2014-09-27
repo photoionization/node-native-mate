@@ -8,4 +8,4 @@ if [[ $OS == 'cygwin' ]]; then
 fi
 
 cp native_mate.gyp binding.gyp
-"$NODEGYP_PATH" rebuild . && rm binding.gyp
+$NODEGYP_PATH rebuild . && rm binding.gyp
