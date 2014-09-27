@@ -15,10 +15,10 @@ void TestCompilation() {
   v8::Isolate* isolate = v8::Isolate::GetCurrent();
 
   mate::Arguments arguments;
-  mate::Dictionary dictionary(isolate);
+  mate::Dictionary dictionary(isolate, MATE_OBJECT_NEW(isolate));
   mate::CreateFunctionTemplate(isolate, base::Bind(TestCompilation));
   mate::ConvertFromV8(isolate, MATE_OBJECT_NEW(isolate), &dictionary);
-  mate::ScopedPersistent<v8::Object> object(MATE_OBJECT_NEW(isolate), isolate);
+  mate::ScopedPersistent<v8::Object> object(isolate, MATE_OBJECT_NEW(isolate));
 
   base::Closure callback;
   mate::ConvertFromV8(isolate, MATE_OBJECT_NEW(isolate), &callback);
